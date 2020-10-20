@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import traceback
 """
 For your homework this week, you'll be creating a wsgi application of
 your own.
@@ -42,13 +43,13 @@ To submit your homework:
 
 """
 def homepage():
-    all_books = DB.titles()
-    body = ['<h1>My Bookshelf</h1>', '<ul>']
-    item_template = '<li><a href="/book/{id}">{title}</a></li>'
-    for book in all_books:
-        body.append(item_template.format(**book))
-    body.append('</ul>')
-    return '\n'.join(body)
+    page = '''
+  <h1>This is a simple Whiskey Calculator</h1>
+  <h2>it can add, subtract, multiply, and divide</h2>
+  <h2>to use, type something simlar to the following in the URL bar</h2>
+  <h3>http://localhost:8080/add/15/10</h3>
+  '''
+    return page
 
 def operation(*args):
     """ Returns a STRING with the sum of the arguments """
@@ -63,13 +64,15 @@ def operation(*args):
              'divide': '/',
              }
     try:
-      if operations[args[0]] == '':
-        return homepage()
+      if args[0] == '':
+        return operations[args[0]]()
       # args[0] = 'add', args[1] = num_1, args[2] = num_2
-      solution = str(eval(args[1], operations[args[0]], args[2]))
+      head = '<h4>The solution to your request is:</h4>'
+      solution = f'<h2>{str(int(eval(args[1] + operations[args[0]] + args[2])))}</h2>'
+      foot = '<a href="/">Back to home</a>'
     except KeyError:
       raise NameError
-    return solution
+    return '\r\n'.join([head, solution, foot])
 
 # TODO: Add functions for handling more arithmetic operations.
 
