@@ -63,7 +63,7 @@ def operation(*args):
              'divide': '/',
              }
     try:
-      if operations[args[0]] = '':
+      if operations[args[0]] == '':
         return homepage()
       # args[0] = 'add', args[1] = num_1, args[2] = num_2
       solution = str(eval(args[1], operations[args[0]], args[2]))
